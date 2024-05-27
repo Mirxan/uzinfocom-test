@@ -50,7 +50,7 @@ class FileRepository implements FileRepositoryInterface
     public function deleteFile(int $id): void
     {
         DB::transaction(function () use ($id) {
-            $fileUser = FileUser::with(['file'])->findOrFail($id);
+            $fileUser = FileUser::allowedRoles()->with(['file'])->findOrFail($id);
             $file = $fileUser->file;
 
             FileUser::destroy($id);

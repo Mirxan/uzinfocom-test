@@ -2,15 +2,18 @@
 
 namespace App\Models\File;
 
+use App\Models\Role\Role;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use App\Models\User;
+use App\Traits\AllowedRoles;
 
 class FileUser extends Pivot
 {
-    use HasFactory;
+    use HasFactory,
+        AllowedRoles;
 
     protected $fillable = [
         'user_id',
@@ -21,6 +24,12 @@ class FileUser extends Pivot
 
     protected $appends = [
         'file_url',
+    ];
+
+    public $deleteAllowedRoles = [
+        Role::MODERATOR => [
+            Role::USER,
+        ],
     ];
 
     protected function getFileUrlAttribute(): string
