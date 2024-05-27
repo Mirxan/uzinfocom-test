@@ -16,7 +16,7 @@ trait AllowedRoles
         if (auth()->user()->isAdmin()) $query;
 
         if (!property_exists($this, $property)) {
-            throw new Exception('Model {{' . class_basename($this) . '}} doesn\'t have the {{$deleteAllowedRoles}} property', 500);
+            throw new Exception("Model {{" . class_basename($this) . "}} doesn\t have the {{$property}} property", 500);
         }
 
         $currentUserRoleNames = auth()->user()?->roles?->pluck('name')->toArray();
